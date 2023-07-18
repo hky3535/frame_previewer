@@ -24,8 +24,9 @@ def http_show(cv2_frame, url):
 ```
 * 程序等价为cv2中的imshow函数，输入cv2格式的图像即可发送大http前端
 * 所以可以近似播放视频
-### shell方法
+### linux shell方法
 ```shell
+#!/bin/bash
 frame_path="source/test.jpg"
 url="http://0.0.0.0:50001"  # 发送POST请求
 headers="Content-Type: application/octet-stream"
