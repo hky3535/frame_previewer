@@ -18,11 +18,11 @@ class Main:
         http_server_thread.start()
 
         # 启动ws服务器
-        video_server_thread = threading.Thread(
+        ws_server_thread = threading.Thread(
             target=self.basic.index_ws, 
             args=("0.0.0.0", 50002)
         )
-        video_server_thread.start()
+        ws_server_thread.start()
 
 
 if __name__ == "__main__":
