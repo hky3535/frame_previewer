@@ -3,6 +3,22 @@
 ## 程序介绍
 * 程序会创建一个网页，用户可以通过post请求将图像发送至该网页，便可以实时预览图像
 
+## docker使用方式
+### 一键部署
+```bash
+git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 23456:30000 -p 23457:30001 --restart always --privileged frame_previewer:latest
+```
+* 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
+### 分解部署
+```bash
+git clone https://github.com/hky3535/frame_previewer.git
+cd frame_previewer
+docker build -t frame_previewer:latest .
+docker run -itd --name frame_previewer -p 23456:30000 -p 23457:30001 --restart always --privileged frame_previewer:latest
+```
+* 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
+### 访问https://0.0.0.0:12345进入网站
+
 ## 程序运行
 * 程序唯一需要pip安装的包只有python3 -m pip install websockets -i https://pypi.tuna.tsinghua.edu.cn/simple
 * 在main.py中设定程序的两个端口，http端口为实际网页服务和post服务端口，ws端口为前后端通信端口
