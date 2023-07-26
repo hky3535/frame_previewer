@@ -6,7 +6,7 @@
 ## docker使用方式
 ### 一键部署
 ```bash
-git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 23456:30000 --restart always --privileged frame_previewer:latest
+git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest
 ```
 * 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
 ### 分解部署
@@ -14,15 +14,15 @@ git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer &
 git clone https://github.com/hky3535/frame_previewer.git
 cd frame_previewer
 docker build -t frame_previewer:latest .
-docker run -itd --name frame_previewer -p 23456:30000 --restart always --privileged frame_previewer:latest
+docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest
 ```
 * 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
-### 访问https://0.0.0.0:12345进入网站
+### 访问http://0.0.0.0:60005进入网站
+### POST请求http://0.0.0.0:60005更新图片
 
 ## 客户端示例
 * 当服务器html和ws部署完成后，便可以在其他程序中，通过post的方式实时在网页中预览图像
 * 目前示例中含有两种客户端
-
 ### python的opencv方法
 ```python
 def http_show(cv2_frame, url):
@@ -35,7 +35,6 @@ def http_show(cv2_frame, url):
 ```
 * 程序等价为cv2中的imshow函数，输入cv2格式的图像即可发送大http前端
 * 所以可以近似播放视频
-
 ### C++的opencv方法
 ```c++
 void http_show(cv::Mat cv2_frame, std::string ip_address, int port) {
@@ -73,7 +72,6 @@ void http_show(cv::Mat cv2_frame, std::string ip_address, int port) {
 ```
 * 与以上python方法一致，可以取代imshow函数
 * 为了避免引入过多库（尤其是交叉编译的时候）使用了socket套接字模拟post请求，当然也可以用cpr、curl之类的库代替
-
 ### linux shell方法
 ```shell
 #!/bin/bash

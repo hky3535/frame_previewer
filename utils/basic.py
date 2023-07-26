@@ -46,7 +46,7 @@ class Basic:
         request_handler = HTTPServer((ip, port), index_html_handler(self))
         request_handler.serve_forever()
     
-    def index_ws(self, ip, port, path):
+    def index_ws(self, ip, port):
         async def update(ws, _):
             parent = self
             try:
@@ -61,6 +61,6 @@ class Basic:
 
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        start_server = websockets.serve(update, ip, port, path=path)
+        start_server = websockets.serve(update, ip, port)
         loop.run_until_complete(start_server)
         loop.run_forever()
