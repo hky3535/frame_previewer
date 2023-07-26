@@ -6,7 +6,7 @@
 ## docker使用方式
 ### 一键部署
 ```bash
-git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 23456:30000 -p 23457:30001 --restart always --privileged frame_previewer:latest
+git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 23456:30000 --restart always --privileged frame_previewer:latest
 ```
 * 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
 ### 分解部署
@@ -14,19 +14,10 @@ git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer &
 git clone https://github.com/hky3535/frame_previewer.git
 cd frame_previewer
 docker build -t frame_previewer:latest .
-docker run -itd --name frame_previewer -p 23456:30000 -p 23457:30001 --restart always --privileged frame_previewer:latest
+docker run -itd --name frame_previewer -p 23456:30000 --restart always --privileged frame_previewer:latest
 ```
 * 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
 ### 访问https://0.0.0.0:12345进入网站
-
-## 程序运行
-* 程序唯一需要pip安装的包只有python3 -m pip install websockets -i https://pypi.tuna.tsinghua.edu.cn/simple
-* 在main.py中设定程序的两个端口，http端口为实际网页服务和post服务端口，ws端口为前后端通信端口
-* ws端口如果发生改变，请在utils/index.html中同样更改ws端口
-> 注：如果使用docker进行运行，则需要docker中同事开放映射这两个端口，且html中需要填写最终映射到物理机上的端口  
-> 例：docker run --name test -p 50001:8888 -p 50002:8889 ubuntu:latest  
-> 这种情况下，main.py中需要将html端口设置为8888，ws端口设置为8889，而html中需要设置端口为50002，网页访问也需要使用0.0.0.0:50001访问（因为最终是在物理机上进行html网页访问）  
-> 所以一般来讲我会直接在创建容器的时候直接 -p 50000-50010:50000-500010 将连续十个端口直接全都映射出来方便使用过  
 
 ## 客户端示例
 * 当服务器html和ws部署完成后，便可以在其他程序中，通过post的方式实时在网页中预览图像

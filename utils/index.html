@@ -18,7 +18,9 @@
             const scaleInput = document.getElementById("scale-input");
 
             // 建立websocket播放图片
-            const ws = new WebSocket("ws://0.0.0.0:50002/ws");
+            var websocketUrl = 'ws://' + window.location.hostname + ':' + window.location.port + '/ws';
+            const ws = new WebSocket(websocketUrl);
+
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
             ws.onmessage = function(event) {

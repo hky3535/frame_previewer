@@ -21,7 +21,7 @@ class Main:
         # 启动ws服务器
         ws_server_thread = threading.Thread(
             target=self.basic.index_ws, 
-            args=("0.0.0.0", 30001)
+            args=("0.0.0.0", 30000, '/ws')
         )
         ws_server_thread.start()
 
