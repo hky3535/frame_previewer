@@ -17,15 +17,15 @@ def http_show(cv2_frame, url):
 # http_show 效果上而言等同于 cv2.imshow
 
 # 本地图片
-cv2_frame = cv2.imread("source/test.jpg")
-http_show(cv2_frame, "http://0.0.0.0:50001")
+cv2_frame = cv2.imread("test.jpg")
+http_show(cv2_frame, "http://192.168.1.10:60005")
 
 # 本地视频
-cv2_video = cv2.VideoCapture("source/test.mp4")
+cv2_video = cv2.VideoCapture("test.mp4")
 while True:
     ret, cv2_frame = cv2_video.read()
     if not ret: break
-    http_show(cv2_frame, "http://0.0.0.0:50001")
+    http_show(cv2_frame, "http://192.168.1.10:60005")
     time.sleep(0.1)
 
 cv2_video.release()

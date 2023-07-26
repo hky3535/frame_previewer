@@ -8,7 +8,7 @@
 ```bash
 git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest
 ```
-* 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
+* 可以使用docker logs frame_previewer查看初始化进度，等待所有初始化库安装完成即可开始运行
 ### 分解部署
 ```bash
 git clone https://github.com/hky3535/frame_previewer.git
@@ -16,13 +16,14 @@ cd frame_previewer
 docker build -t frame_previewer:latest .
 docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest
 ```
-* 可以使用docker logs online_toolkit查看初始化进度，等待所有初始化库安装完成即可开始运行
-### 访问http://0.0.0.0:60005进入网站
-### POST请求http://0.0.0.0:60005更新图片
+* 可以使用docker logs frame_previewer查看初始化进度，等待所有初始化库安装完成即可开始运行
+### 访问http://0.0.0.0:60005进入网站在线预览post上去的图片
+### 使用POST请求http://0.0.0.0:60005发送图片（发送方法详见client_examples示例）
 
 ## 客户端示例
-* 当服务器html和ws部署完成后，便可以在其他程序中，通过post的方式实时在网页中预览图像
-* 目前示例中含有两种客户端
+* 容器内通过nginx将http服务器的30001端口，和websocket的30002端口绑定至30000端口
+* 容器启动后可以在其他程序中，通过post的方式实时在网页中刷新图像
+* 目前示例中含有三种客户端
 ### python的opencv方法
 ```python
 def http_show(cv2_frame, url):
@@ -32,9 +33,10 @@ def http_show(cv2_frame, url):
 
     headers = {"Content-Type": "application/octet-stream"}
     res = requests.post(url, headers=headers, data=bytes_frame)     # 发送到网页服务器
+url = "http://192.168.1.10:60005"
 ```
-* 程序等价为cv2中的imshow函数，输入cv2格式的图像即可发送大http前端
-* 所以可以近似播放视频
+* 程序等价为cv2中的imshow函数，输入cv2格式的图像即可发送至http前端进行预览
+* 视频播放同理，直接代替imshow函数进行播放
 ### C++的opencv方法
 ```c++
 void http_show(cv::Mat cv2_frame, std::string ip_address, int port) {
@@ -69,14 +71,16 @@ void http_show(cv::Mat cv2_frame, std::string ip_address, int port) {
     close(sock);
     return;
 }
+std::string ip_address = "192.168.1.10";
+int port = 60005;
 ```
 * 与以上python方法一致，可以取代imshow函数
 * 为了避免引入过多库（尤其是交叉编译的时候）使用了socket套接字模拟post请求，当然也可以用cpr、curl之类的库代替
 ### linux shell方法
 ```shell
 #!/bin/bash
-frame_path="source/test.jpg"
-url="http://0.0.0.0:50001"  # 发送POST请求
+frame_path="test.jpg"
+url="http://192.168.1.10:60005"  # 发送POST请求
 headers="Content-Type: application/octet-stream"
 curl -X POST -H "$headers" --data-binary "@$frame_path" "$url"
 ```

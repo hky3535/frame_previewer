@@ -49,6 +49,6 @@ void http_show(cv::Mat cv2_frame, std::string ip_address, int port) {
 }
 
 int main() {
-    cv::Mat cv2_frame = cv::imread("source/test.jpg");
-    http_show(cv2_frame, "0.0.0.0", 50001);
+    cv::Mat cv2_frame = cv::imread("test.jpg");
+    http_show(cv2_frame, "192.168.1.10", 60005);
 }
