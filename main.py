@@ -28,7 +28,7 @@ class Main:
 
         # 启动Nginx
         try:
-            subprocess.check_call(['nginx', '-c', f'{self.basic.base_dir}/nginx.conf'])
+            subprocess.check_call(['nginx', '-c', 'nginx.conf'])
         except subprocess.CalledProcessError as e:
             pass
         finally:
