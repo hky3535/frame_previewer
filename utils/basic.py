@@ -15,7 +15,7 @@ class Basic:
     def __init__(self):
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.index_html_dir = f"utils/index.html"
-        self.bytes_frame = open(f"{self.base_dir}/blank.bytes")
+        self.bytes_frame = open(f"{self.base_dir}/blank.jpg", "rb").read()
 
     def index_html(self, ip, port):
         def index_html_handler(self):
