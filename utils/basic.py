@@ -14,7 +14,7 @@ import websockets
 class Basic:
     def __init__(self):
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
-        self.index_html_dir = f"{self.base_dir}/index.html"
+        self.index_html_dir = f"utils/index.html"
         self.bytes_frame = self.generate_blank()
 
     def generate_blank(self):
