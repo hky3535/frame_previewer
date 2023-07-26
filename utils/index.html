@@ -41,9 +41,9 @@
             };
             
             // 解除websocket链接
-            window.addEventListener("beforeunload", function() {
+            window.onbeforeunload = function() {
                 ws.close();
-            });
+            };
         </script>
 
     </body>

@@ -9,6 +9,7 @@ import base64
 from io import BytesIO
 import asyncio
 import websockets
+import atexit
 
 
 class Basic:
@@ -39,30 +40,23 @@ class Basic:
         
         request_handler = HTTPServer((ip, port), index_html_handler(self))
         request_handler.serve_forever()
+        atexit.register(request_handler.shutdown)   # 在程序退出时关闭 WebSocket 连接
     
     def index_ws(self, ip, port):
         async def update(ws, _):
             parent = self
-            try:
-                while True:
-                    base64_frame = base64.b64encode(parent.bytes_frame).decode('utf-8')
+            while True:
+                base64_frame = base64.b64encode(parent.bytes_frame).decode('utf-8')
+                try:
                     await ws.send(base64_frame)
-                    time.sleep(0.01)
-            except websockets.exceptions.ConnectionClosedError:
-                pass
+                except websockets.exceptions.ConnectionClosedError:
+                    break
+                except websockets.exceptions.ConnectionClosedOK:
+                    break
+                time.sleep(0.01)
 
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         start_server = websockets.serve(update, ip, port)
         loop.run_until_complete(start_server)
         loop.run_forever()
-
-        # 处理前端连接丢失后的后处理
-        try:
-            loop.run_until_complete(start_server)
-        except KeyboardInterrupt:
-            pass
-        finally:
-            loop.stop()
-            loop.run_until_complete(loop.shutdown_asyncgens())
-            loop.close()
