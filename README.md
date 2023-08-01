@@ -6,7 +6,7 @@
 ## docker使用方式
 ### 一键部署
 ```bash
-git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest
+git clone https://github.com/hky3535/frame_previewer.git && cd frame_previewer && docker build -t frame_previewer:latest . && docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest && cd ..
 ```
 * 可以使用docker logs frame_previewer查看初始化进度，等待所有初始化库安装完成即可开始运行
 ### 分解部署
@@ -15,6 +15,7 @@ git clone https://github.com/hky3535/frame_previewer.git
 cd frame_previewer
 docker build -t frame_previewer:latest .
 docker run -itd --name frame_previewer -p 60005:30000 --restart always --privileged frame_previewer:latest
+cd ..
 ```
 * 可以使用docker logs frame_previewer查看初始化进度，等待所有初始化库安装完成即可开始运行
 ### 访问http://0.0.0.0:60005进入网站在线预览post上去的图片
