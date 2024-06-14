@@ -86,3 +86,4 @@ headers="Content-Type: application/octet-stream"
 curl -X POST -H "$headers" --data-binary "@$frame_path" "$url"
 ```
 * 程序读取一个jpg文件并通过curl发送
+ 
